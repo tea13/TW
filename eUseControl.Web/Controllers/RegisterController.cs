@@ -8,48 +8,65 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
+
 namespace eUseControl.Web.Controllers
 {
-    public class LoginController : Controller
+    public class RegisterController : Controller
     {
         private readonly ISession _session;
-        public LoginController()
+        public RegisterController()
         {
             var b1 = new BussinesLogic();
             _session = b1.GetSessionBL();
         }
 
-        //GET: Login
-        public ActionResult Index()
+
+
+        // GET: Register
+        public ActionResult Register()
         {
             return View();
         }
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(UserLogin login)
+        public ActionResult Register(UserRegister data)
         {
+
             if (ModelState.IsValid)
             {
-                ULoginData data = new ULoginData
+                UserRegisterData user = new UserRegisterData
                 {
-                    Credential = login.Credential,
-                    Password = login.Password,
-                    LoginIp = Request.UserHostAddress,
-                    LoginDateTime = DateTime.Now
+                    Credential = data.Credential,
+                    Password = data.Password,
+                    Email = data.Email,
+                    Informatie = data.Informatie,
+                    RegisterDateTime = DateTime.Now
                 };
-                var userLogin = _session.UserLogin(data);
-                if(userLogin.Status)
+
+
+
+                ULoginResp userRegistration = _session.UserRegister(user);
+                if (userRegistration.Status)
                 {
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", userLogin.StatusMsg);
+                    ModelState.AddModelError("", userRegistration.StatusMsg);
                     return View();
                 }
+
+
+
             }
             return View();
+
+
+
         }
-     }       
+    }
 }

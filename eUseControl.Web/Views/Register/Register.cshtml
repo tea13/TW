@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Web.Optimization
+@model eUseControl.Web.Models.UserRegister
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 justify-content-center">
+            @Html.ValidationSummary(true)
+            @Html.ValidationMessageFor(m => m.Credential)
+            @Html.ValidationMessageFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Email)
+            @Html.ValidationMessageFor(m => m.Informatie)
+            @using (Html.BeginForm("Register", "Register", FormMethod.Post, new { @id = "RegisterForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-row">
+                    @Html.Label("Nume utilizator")
+                    @Html.TextBoxFor(m => m.Credential, new
+               {
+                   placeholder = "Username",
+                   title = "Please enter your name",
+                   name = "name",
+                   value = "",
+                   id = "name",
+                   @class = "form-control"
+               })
+                </div>
+                <div class="form-row">
+                    @Html.Label("Introduceti parola")
+                    @Html.TextBoxFor(m => m.Password, new
+               {
+                   placeholder = "********",
+                   title = "Please enter your password",
+                   name = "password",
+                   value = "",
+                   id = "password",
+                   type = "password",
+                   @class = "form-control"
+               })
+                </div>
+                <div class="form-row">
+                    @Html.Label("Adresa email")
+                    @Html.TextBoxFor(m => m.Email, new
+               {
+                   placeholder = "email@gmail.com",
+                   title = "Please enter your email",
+                   name = "email",
+                   value = "",
+                   id = "email",
+                   @class = "form-control"
+               })
+                </div>
+                <div class="form-row" style="margin-top:20px">
+                    @Html.LabelFor(m => m.Informatie, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.Informatie, new
+               {
+                   placeholder = "Blablabla",
+                   title = "Please enter information about you",
+                   name = "info",
+                   rows = 8,
+                   value = "",
+                   id = "info",
+                   @class = "form-control"
+               })
+                </div>
+                <div class="text-center" style="margin-top:20px">
+                    <button type="submit" class="btn btn-light btn-register">Register</button>
+                </div>
+            }
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
