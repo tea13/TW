@@ -5,12 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using eUseControl.Domain.Enums;
 
 
 
-namespace eUseControl.Domain
+namespace eUseControl.Domain.Entities.User
 {
-    public class UserDbTable
+    public class UsersDbTable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,8 +26,9 @@ namespace eUseControl.Domain
 
 
 
-        [Required(ErrorMessage = "Required")]
+        [Required]
         [Display(Name = "Password")]
+        [StringLength(40, MinimumLength = 5, ErrorMessage = "Password must be more than 8 characters")]
         public string Password { get; set; }
 
 
@@ -44,9 +46,9 @@ namespace eUseControl.Domain
         [StringLength(300)]
         public string Info { get; set; }
 
+        public URole Level { get; set; }
 
-
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         public DateTime RegisterDate { get; set; }
 
 

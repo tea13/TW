@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eUseControl.Domain.Entities.User
 {
-    public class UserRegisterData
+    public class URegisterData
     {
         public string Credential { get; set; }
         public string Password { get; set; }

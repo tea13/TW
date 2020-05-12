@@ -1,14 +1,18 @@
-﻿@{
+﻿@model eUseControl.Web.Models.UserLogin
+@{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @using System.Web.Optimization
-@model eUseControl.Web.Models.UserLogin
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4 justify-content-center">
             @Html.ValidationSummary(true)
+            @Html.ValidationMessageFor(m => m.Credential)
+            @Html.ValidationMessageFor(m => m.Password)
             @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @id = "LoginForm" }))
             {
                 @Html.AntiForgeryToken()

@@ -1,28 +1,30 @@
-﻿using eUseControl.BusinessLogic;
-using eUseControl.BusinessLogic.Interfaces;
-using eUseControl.Domain.Entities.User;
-using eUseControl.Web.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using eUseControl.BusinessLogic;
+using eUseControl.BusinessLogic.Interfaces;
+using eUseControl.Domain.Entities.User;
+using eUseControl.Domain.Enums;
+using eUseControl.Web.Models;
 
 namespace eUseControl.Web.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly ISession _session;
-        public LoginController()
-        {
-            var b1 = new BussinesLogic();
-            _session = b1.GetSessionBL();
-        }
-
-        //GET: Login
+        // GET: Register
         public ActionResult Index()
         {
             return View();
+        }
+
+        private readonly ISession _session;
+
+        public LoginController()
+        {
+            var bl = new BussinesLogic();
+            _session = bl.GetSessionBL();
         }
 
         [HttpPost]
@@ -37,11 +39,24 @@ namespace eUseControl.Web.Controllers
                     Password = login.Password,
                     LoginIp = Request.UserHostAddress,
                     LoginDateTime = DateTime.Now
+
                 };
                 var userLogin = _session.UserLogin(data);
-                if(userLogin.Status)
+                if (userLogin.Status)
                 {
-                    return RedirectToAction("Index", "Home");
+                    HttpCookie cookie = _session.GenCookie(login.Credential);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+
+                    var user = _session.GetUserByCookie(cookie.Value);
+
+                    if (user.Level == URole.Administrator)
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
@@ -49,7 +64,8 @@ namespace eUseControl.Web.Controllers
                     return View();
                 }
             }
+
             return View();
         }
-     }       
+    }
 }

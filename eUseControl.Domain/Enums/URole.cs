@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eUseControl.Domain
+namespace eUseControl.Domain.Enums
 {
-    public class Class1
+    public enum URole
     {
+        Administrator,
+        Guest
     }
 }

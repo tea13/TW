@@ -38,7 +38,7 @@ namespace eUseControl.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                UserRegisterData user = new UserRegisterData
+                URegisterData user = new URegisterData
                 {
                     Credential = data.Credential,
                     Password = data.Password,

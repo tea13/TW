@@ -1,0 +1,13 @@
+﻿@model eUseControl.Web.Models.UserData
+@{
+    ViewBag.Title = "Signed in";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" style="margin-top: 15% ">
+    <div class="row" style="height: 55vh">
+        <div class="col">
+            <h2>Salutare, @Model.Username . Ați intrat ca @Model.Level</h2>
+        </div>
+    </div>
+</div>
